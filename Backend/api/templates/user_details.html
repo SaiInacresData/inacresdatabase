@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Plot Availables {% endblock %}
+{% block content %}
+
+
+<section class="vh-100" style="background-color: #9CEEE5 ">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card" style="border-radius: 1rem;">
+          <div class="row g-0"></br></br>                 
+        <div class="col-md-6 col-lg-12 d-flex align-items-center">
+          <div class="card-body p-4 p-lg-5 text-black">
+            <div class="d-flex align-items-center mb-3 pb-1">
+              <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+              <span class="h1 fw-bold mb-0"> Plots Available </span>
+            </div>
+            
+          <hr>
+          <a href="{% url 'api:index' %}" type="button" class="btn btn-dark btn-sm btn-block" >Homepage</a></br></br>
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-shadnagar-tab" data-bs-toggle="tab" data-bs-target="#nav-shadnagar" type="button" role="tab" aria-controls="nav-shadnagar" aria-selected="true">Shadnagar</button>
+                <button class="nav-link" id="nav-bhutpur-tab" data-bs-toggle="tab" data-bs-target="#nav-bhutpur" type="button" role="tab" aria-controls="nav-bhutpur" aria-selected="false">Bhutpur</button>
+                <button class="nav-link" id="nav-maddur-tab" data-bs-toggle="tab" data-bs-target="#nav-maddur" type="button" role="tab" aria-controls="nav-maddur" aria-selected="false">Maddur</button>
+                <button class="nav-link" id="nav-aleru-tab" data-bs-toggle="tab" data-bs-target="#nav-aleru" type="button" role="tab" aria-controls="nav-aleru" aria-selected="false" >Aleru</button>
+                <button class="nav-link" id="nav-kothakota-tab" data-bs-toggle="tab" data-bs-target="#nav-kothakota" type="button" role="tab" aria-controls="nav-kothakota" aria-selected="false">Kothakota</button>
+                <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-disabled" type="button" role="tab" aria-controls="nav-disabled" aria-selected="false" disabled>Disabled</button>
+              </div>
+            </nav>
+          </br>
+            <div class="tab-content" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-shadnagar" role="tabpanel" aria-labelledby="nav-shadnagar-tab" tabindex="0">
+                {% for project in plot %}
+                {% if project.project_name.project_name == 'SHADNAGAR' %}
+                {% for q in query %}
+                {% if q.project_name.project_name == 'SHADNAGAR' and q.plot_no.plot_no == project.plot_no %}
+                <button type="button" class="btn btn-outline-danger" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Extent : {{ project.land_extent }}">{{ project.plot_no }}</button>
+                {% else %}
+                <button type="button" class="btn btn-outline-success" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Extent : {{ project.land_extent }}">{{ project.plot_no }}</button>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+              <div class="tab-pane fade" id="nav-bhutpur" role="tabpanel" aria-labelledby="nav-bhutpur-tab" tabindex="0">
+                {% for project in plot %}
+                {% if project.project_name.project_name == 'BHUTPUR' %}
+                {% for q in query %}
+                {% if q.project_name.project_name == 'BHUTPUR' and q.plot_no.plot_no == project.plot_no %}
+                <button type="button" class="btn btn-outline-danger" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Extent : {{ project.land_extent }}">{{ project.plot_no }}</button>
+                {% else %}
+                <button type="button" class="btn btn-outline-success" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Extent : {{ project.land_extent }}">{{ project.plot_no }}</button>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+              <div class="tab-pane fade" id="nav-maddur" role="tabpanel" aria-labelledby="nav-maddur-tab" tabindex="0">
+                {% for project in plot %}
+                {% if project.project_name.project_name == 'MADDUR' %}
+                {% for q in query %}
+                {% if q.project_name.project_name == 'MADDUR' and q.plot_no.plot_no == project.plot_no %}
+                <button type="button" class="btn btn-outline-danger" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Extent : {{ project.land_extent }}">{{ project.plot_no }}</button>
+                {% else %}
+                <button type="button" class="btn btn-outline-success" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Extent : {{ project.land_extent }}">{{ project.plot_no }}</button>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+              <div class="tab-pane fade" id="nav-aleru" role="tabpanel" aria-labelledby="nav-aleru-tab" tabindex="0">
+                {% for project in plot %}
+                {% if project.project_name.project_name == 'ALERU' %}
+                {% for q in query %}
+                {% if q.project_name.project_name == 'ALERU' and q.plot_no.plot_no == project.plot_no %}
+                <button type="button" class="btn btn-outline-danger" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Extent : {{ project.land_extent }}">{{ project.plot_no }}</button>
+                {% else %}
+                <button type="button" class="btn btn-outline-success" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Extent : {{ project.land_extent }}">{{ project.plot_no }}</button>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+              <div class="tab-pane fade" id="nav-kothakota" role="tabpanel" aria-labelledby="nav-kothakota-tab" tabindex="0">
+                {% for project in plot %}
+                {% if project.project_name.project_name == 'KOTHAKOTA' %}
+                {% for q in query %}
+                {% if q.project_name.project_name == 'KOTHAKOTA' and q.plot_no.plot_no == project.plot_no %}
+                <button type="button" class="btn btn-outline-danger" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Extent : {{ project.land_extent }}">{{ project.plot_no }}</button>
+                {% else %}
+                <button type="button" class="btn btn-outline-success" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Extent : {{ project.land_extent }}">{{ project.plot_no }}</button>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+              </div>
+              <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+<script>
+const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+</script>
+{% endblock %}

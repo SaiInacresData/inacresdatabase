@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} Homepage {% endblock %}
+{% block content %}
+<section class="h-100" style="background-color: #9CEEE5 ">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card" style="border-radius: 1rem;">
+          <div class="row g-0">
+            <div class="col-md-6 col-lg-12 d-flex align-items-center">
+            <div class="card-body p-4 p-lg-5 text-black">
+            {% for project in query %}
+    <div class="row">
+    <div class="col text-center">
+      
+      <span class="h3 fw-bold mb-0">Project Name: {{project.project_name}}</span></br></br>
+      <span class="h4 fw-bold mb-0">Plot Number: {{project.plot_no}}</span></br><hr></br>
+    </div>
+    </br>
+  </div>
+{% endfor %}
+{% for object in query %}
+<div class="row align-items-start">
+  <span class="h3 fw-bold mb-0">User Personal Details:</span><hr></br>
+  <div class="col">
+    <span class="h6 fw-bold mb-0">Name : {{ object.plot_no.first_name }} {{ object.plot_no.last_name }}</span>
+  </div>
+  <div class="col">
+    <h6 class="mb-0"><b>Mail Id:  </b></h6>{{object.plot_no.mail_id}}
+  </div>
+  <div class="col">
+    <h6 class="mb-0"><b>Mobile Number :  </b></h6>{{ object.plot_no.mobile_number }}
+  </div>
+  
+</div></br>
+<div class="row align-items-start">
+ 
+  <div class="col">
+    <h6 class="mb-0"><b>Address : </b></h6>{{ object.plot_no.address }}
+  </div>
+  <div class="col">
+    <h6 class="mb-0"><b>Community : </b></h6>{{ object.plot_no.community }}
+  </div>
+  <div class="col">
+    <h6 class="mb-0"><b>City :  </b></h6>{{ object.plot_no.city }}
+  </div>
+  
+</div></br>
+<div class="row align-items-start">
+ 
+  <div class="col">
+    <h6 class="mb-0"><b>District : </b></h6>{{ object.plot_no.district }}
+  </div>
+  <div class="col">
+    <h6 class="mb-0"><b>State :  </b></h6>{{ object.plot_no.state }}
+  </div>
+  <div class="col">
+    <h6 class="mb-0"><b>Zip :  </b></h6>{{ object.plot_no.pincode }}
+  </div>
+  
+</div></br>
+<b><h3 class='fw-bold mb-0'>User Plot Details:</h3></b><hr></br>
+<div class="row align-items-start">
+ 
+  <div class="col">
+    <h6 class="mb-0"><b>Aadhar No : </b></h6>{{ object.aadhar_no }}
+  </div>
+  <div class="col">
+    <h6 class="mb-0"><b>Katha No : </b></h6>{{ object.katha_no }}
+  </div>
+  <div class="col">
+    <h6 class="mb-0"><b>Passbook No : </b></h6>{{ object.passbook_no }}
+  </div>
+  
+</div></br>
+<div class="row align-items-start">
+ 
+  <div class="col">
+    <h6 class="mb-0"><b>Land Extent :  </b></h6>{{ object.plot_no.land_extent }}
+  </div>
+  <div class="col">
+    <h6 class="mb-0"><b>Document No : </b></h6>{{ object.document_no }}
+  </div>
+  <div class="col">
+    <h6 class="mb-0"><b>Total Amount :  </b></h6>{{ object.total_amount }}
+  </div>
+</div></br><hr>
+<h6 class="text-danger"><u>Note :</u> {{ object.note }}</h6>
+{% if user.is_staff and user.is_superuser %}
+<a href="{% url 'api:docupdate'  pk=object.pk %}">edit</a>
+{% endif %}<hr></br>
+<div class="row align-items-start">
+ 
+  <div class="col">
+    <h5 class="mb-1"><b><u>Pass Photo :</u></b></br></br>
+      <a href='{{ object.pass_photo.url }}' target="_blank">
+          <img src="{{ object.media_url }}{{ object.pass_photo.url }}" class='col-md-3 img-fluid border border-dark h-25 w-50' alt='aadhar photo'>
+      </a>
+      </h5>
+      <a class='btn btn-outline-primary' href='{{ object.pass_photo.url }}' target="_blank" download>Download</a>
+  </div>
+  <div class="col">
+    <h5 class="mb-1"><b><u>Passbook photo :</u></b></br></br>  
+      <a href='{{ object.passbook_photo.url }}' target="_blank">                    
+          <img src="{{ object.media_url }}{{ object.passbook_photo.url }}" alt='passbook photo' class=' col-md-3 border border-dark h-25 w-50 img-fluid'>                
+      </a>
+      </h5>
+      <a class='btn btn-outline-primary' href='{{ object.passbook_photo.url }}' target="_blank" download>Download</a>
+  </div>
+  
+</div></br>
+{% endfor %}
+<div class="row align-items-start">
+  <h5 class="mb-1"><b><u>Document Photos :</u></b></h5><hr></br>
+  {% for objects in query1 %} 
+  <div class="col">
+    <a target="_blank" href="{{ objects.document_photos.url }}" oncontextmenu="return false;">
+      <img src="{{ objects.media_url }}{{ objects.document_photos.url }}" alt='documents photo' class="img-thumbnail border border-3 border-dark ">
+  </a> </br>
+  <a class='btn btn-outline-primary' href='{{ objects.document_photos.url }}' target="_blank" download>Download</a></br>
+  </div>
+  {% endfor %}
+</div></br><hr>
+  
+      
+
+
+
+{% comment %} <h5 class="text-success"><b><u>Document Photos :</u></b></h5></br>
+<div class='row'>
+{% for objects in query1 %}
+  <img class="border border-3 border-dark h-75 w-50" src="{{ objects.document_photos.url }}" style="width:255px;">
+{% endfor %} {% endcomment %}
+
+
+</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+</section>
+{% endblock %}

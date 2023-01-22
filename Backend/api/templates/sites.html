@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Sites {% endblock %}
+{% block content %}
+<style>
+  div.scrollmenu {
+    {% comment %} background-color: #333; {% endcomment %}
+    overflow: auto;
+    white-space: nowrap;
+  }
+  
+  div.scrollmenu a {
+    display: inline-block;
+    color: red;
+    text-align: center;
+    padding: 8px;
+    text-decoration: none;
+  }
+  
+  div.scrollmenu a:hover {
+    background-color: #777;
+  }
+  </style>
+  {% comment %} <section class="h-100" style="background-color: #9CEEE5 ">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="row g-0">
+              <div class="col-md-6 col-lg-12 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-5 text-black">
+                  <div class="d-flex align-items-center mb-3 pb-1">
+                    <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                    <span class="h1 fw-bold mb-0"> Project Details </span>
+                  </div>
+                    <hr>
+                    <a href="{% url 'api:index' %}" type="button" class="btn btn-dark btn-sm btn-block" >Homepage</a></br>
+                    <form class="d-flex mt-3" method='GET' action='{% url 'api:sites' %}' role='search'>
+                      <div class="input-group mb-6">
+                        <input class="form-control " type="search" placeholder="Search by name, plot no, project name, mail, phone etc..," aria-label="Search" aria-describedby="basic-addon1" name='q'>
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                      </div>
+                    </form></br>
+                  <div class='container table-responsive'>
+                    <table class="table table-hover table-md">
+                      <thead>
+                        <tr>
+                          <th scope="col">Survey Number</th>
+                          <th scope="col">Plot Number</th>
+                          <th scope="col">First Name</th>
+                          <th scope="col">Last Name</th>
+                          <th scope="col">Mail Id</th>
+                          <th scope="col">Phone Number</th>
+                          <th scope='col'>Details</th>
+                        </tr>
+                      </thead>
+                      {% for project in QuerySet %}
+                      <tbody>
+                        <tr>
+                          <th scope="row">{{project.plot_no.survey_no}}</th>
+                          <td>{{project.plot_no.plot_no}}</td>
+                          <td>{{project.plot_no.first_name}}</td>
+                          <td>{{project.plot_no.last_name}}</td>
+                          <td>{{project.plot_no.mail_id}}</td>
+                          <td>{{project.plot_no.mobile_number}}</td>
+                          <td><a href="{% url 'api:details'  pk=project.pk %}"><i class="bi bi-eye-fill btn btn-primary" aria-hidden="true"></i> </a></td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> {% endcomment %}
+
+  <section class="vh-100" style="background-color: #9CEEE5 ">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="row g-0"></br></br>                 
+              <div class="col-md-6 col-lg-12 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-6 text-black">
+                  <div class="d-flex align-items-center mb-3 pb-1">
+                    <span class="h1 fw-bold mb-0"> Projects </span>
+                  </div>
+                  <hr>
+                  <a href="{% url 'api:index' %}" type="button" class="btn btn-dark btn-sm btn-block" >Homepage</a></br></br>
+                  <form class="d-flex mt-3" method='GET' action='{% url 'api:sites' %}' role='search'>
+                    <div class="input-group mb-6">
+                      <input class="form-control " type="search" placeholder="Search by name, plot no, project name, mail, phone etc..," aria-label="Search" aria-describedby="basic-addon1" name='q'>
+                      <button class="btn btn-outline-success" type="submit">Search</button>
+                    </div>
+                  </form></br>
+                </div>
+              </div>
+              <div class="scrollmenu col-md-6 col-lg-12 d-flex align-items-center">  
+                <div class="card-body  p-4 p-lg-6 text-black flex-row nowrap">
+                  <table class="table table-hover ">
+                    <thead>
+                      <tr>
+                        <th scope="col">Survey No</th>
+                        <th scope="col">Project</th>
+                        <th scope="col">Plot No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone No</th>
+                        <th scope='col'>View</th>
+                        {% if user.is_authenticated and user.is_staff %}
+                        <th scope='col'>Edit</th>
+                        {% endif %}
+                        {% if user.is_authenticated and user.is_staff and user.is_superuser %}
+                        <th scope='col'>Delete</th>
+                        {% endif %}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for project in QuerySet %}
+                      <tr>
+                        <th scope="row">{{project.plot_no.survey_no}}</th>
+                        <td>{{project.plot_no.project_name}}</td>
+                        <td>{{project.plot_no.plot_no}}</td>
+                        <td>{{project.plot_no.first_name}} {{project.plot_no.last_name}}</td>
+                        <td>{{project.plot_no.mobile_number}}</td>
+                        <td><a href="{% url 'api:details'  pk=project.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                        </svg> </a></td>
+                        {% if user.is_authenticated and user.is_staff %}
+                        <td><a href="{% url 'api:regupdate'  pk=project.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                          <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                        </svg></a></td>
+                        {% endif %}
+                        {% if user.is_authenticated and user.is_staff and user.is_superuser %}
+                        <td><a href="{% url 'api:regdelete'  pk=project.pk %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                        </svg></a></td>
+                        {% endif %}
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

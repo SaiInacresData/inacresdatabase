@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inacres</title>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    {% if user.is_authenticated %}
+    <nav class="navbar bg-body-tertiary fixed-top">
+      <div class="container-fluid">
+        <b><a class="navbar-brand" href="#">Inacres Database</a></b>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+          <b><span class="navbar-toggler-icon"></span></b>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Inacres</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item">
+                <b><a class="nav-link active" aria-current="page" href="{% url 'api:index' %}">Home</a></b>
+              </li>
+              <li class="nav-item">
+                <b><a class="nav-link" href="{% url 'api:newReg' %}">Step-1: User Registration</a></b>
+              </li>
+              {% if user.is_authenticated and user.is_staff %}
+              <li class="nav-item">
+                <b><a class="nav-link" href="{% url 'api:newdoc' %}">Step-2: User Document Regstration</a></b>
+              </li>
+              {% endif %}
+              <li class="nav-item">
+                <b><a class="nav-link" href="{% url 'api:user_details' %}">Plots Available</a></b>
+              </li>
+              <li class="nav-item">
+                <b><a class="nav-link" href="{% url 'api:sites' %}">Sites</a></b>
+              </li>
+              {% if user.is_authenticated and user.is_staff and user.is_superuser %}
+              <li class="nav-item">
+                <b><a class="nav-link" href="{% url 'api:newproject' %}">New Project</a></b>
+              </li>
+              {% endif %}
+              {% comment %} <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Project details
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'api:user_details' %}">Plots Available</a></li>
+                  <li><a class="dropdown-item" href="{% url 'api:plotamount' %}">Add Amount</a></li>  
+                  <li><a class="dropdown-item" href="{% url 'api:Adetails' %}">Amount Details</a></li>      
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'api:sites' %}">Sites</a></li>
+                </ul>
+              </li> {% endcomment %}
+              <li class="nav-item">
+                <b><a class="nav-link" href="{% url 'api:logout' %}">Logout</a></b>
+              </li>
+            </ul>
+            <form class="d-flex mt-3" role="search"  method='GET' action='{% url 'api:sites' %}'>
+              <input class="form-control me-2" name='q' type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-dark" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </br>
+
+    {% endif %}
+      </br>
+      <div class='container'>
+        {% block content %}
+
+        {% endblock %}  
+    </div> 
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </body>
+</html>
